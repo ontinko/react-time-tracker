@@ -1,0 +1,87 @@
+.task {
+    text-align: center;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    background-color: rgb(160, 200, 200);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rightSide {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    align-items: center;
+}
+
+.inputs {
+    width: 100%;
+    background-color: rgb(160, 200, 200);
+    padding: 10px;
+    text-align: center;
+    border: none;
+    border-radius: 15px;
+    font-size: 28px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.error {
+    margin: 5px 0;
+    font-size: 24px;
+}
+
+.active {
+    background-color: rgb(100, 200, 120);
+}
+
+.time {
+    padding: 0 15px;
+    display: flex;
+    flex-direction: row;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: 600;
+    font-size: 28px;
+}
+
+.controls {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+}
+
+.name {
+    text-align: center;
+    font-weight: 600;
+    font-size: 28px;
+}
+
+.timeInput {
+    width: 70px;
+    font-weight: 600;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 28px;
+}
+
+.nameInput {
+    font-size: 28px;
+    font-weight: 600;
+    width: 100%;
+    padding: 0px 20px;
+}
+
+.buttonImage {
+    height: 50px;
+}
