@@ -14,6 +14,10 @@ function Task({ taskName, taskIndex, taskIsActive, secondsLeft, setIsActive, tas
         setSeconds(secondsLeft % 60);
     }, [secondsLeft]);
 
+    useEffect(() => {
+        setNewName(taskName);
+    }, [taskName])
+
     const handleEdit = () => {
         setIsActive(false);
         setIsEditing(true);
