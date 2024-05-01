@@ -22,20 +22,24 @@ function Task({
     const [newName, setNewName] = useState(taskName);
     const [error, setError] = useState('');
 
+    // update minutes and seconds on each rerender
     useEffect(() => {
         setMinutes(Math.floor(secondsLeft / 60));
         setSeconds(secondsLeft % 60);
     }, [secondsLeft]);
 
+    // update task name when the task is rerendered
     useEffect(() => {
         setNewName(taskName);
     }, [taskName]);
 
+    // pause the timer when editing a task
     const handleEdit = () => {
         setIsActive(false);
         setIsEditing(true);
     };
 
+    // stop the timer if deleting the current task
     const handleDelete = () => {
         if (taskIndex === 0) {
             setIsActive(false);

@@ -10,6 +10,9 @@ const App = () => {
     const [taskName, setTaskName] = useState('');
     const [taskSecondsTotal, setTaskSecondsTotal] = useState(0);
     const [taskMinutesTotal, setTaskMinutesTotal] = useState(0);
+
+    // tasks are stored as a queue of objects
+    // the queue is updated with each tick
     const [tasks, setTasks] = useState([]);
     const [isActive, setIsActive] = useState(false);
     const [isStopped, setIsStopped] = useState(true);
