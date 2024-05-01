@@ -10,8 +10,11 @@ const App = () => {
     const [isActive, setIsActive] = useState(false);
     const [isStopped, setIsStopped] = useState(true);
     const [isDone, setIsDone] = useState(false);
-    const [error, setError] = useState("");
     const [globalStartTime, setGlobalStartTime] = useState(0);
+
+    // the only custom validation error is that of non specified timer duration
+    // it gets reset with each new edit for convenience
+    const [error, setError] = useState("");
 
     const handleChangeName = event => {
         setError("");
@@ -119,8 +122,8 @@ const App = () => {
         return () => clearTimeout(timer);
     }, [isActive, tasks]); // the timer is supposed to get triggered when a task has changed and isActive is true
 
-
     let bottom;
+    let errorView;
 
     if (isDone) {
         bottom = <div className={styles.placeholderMessage}>All done!</div>
@@ -139,6 +142,7 @@ const App = () => {
                             secondsLeft={task.secondsLeft}
                             taskQueue={tasks}
                             setIsActive={setIsActive}
+                            setIsStopped={setIsStopped}
                             setTasks={setTasks}
                         />
                     );
@@ -147,23 +151,25 @@ const App = () => {
         </div>
     }
 
+    if (error) {
+        errorView = <div className={styles.error}>{error}</div>;
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.app}>
                 <div className={styles.titleBar}>
                     <div className={styles.title}>Time Tracker</div>
                     <div className={styles.controls}>
-                        <button onClick={handleReset} className={styles.button}>
+                        <button onClick={handleReset}>
                             <img src="../static/stop-svgrepo-com.svg" className={styles.buttonImage} />
                         </button>
-                        <button className={styles.button}
-                            onClick={handleGoPause}
-                        >
+                        <button onClick={handleGoPause}>
                             <img src={isActive ? "../static/pause-svgrepo-com.svg" : "../static/play-svgrepo-com.svg"} className={styles.buttonImage} />
                         </button>
                     </div>
                 </div>
-                <form className={styles.form} onSubmit={handleAddTask}>
+                <form autoComplete="off" className={styles.form} onSubmit={handleAddTask}>
                     <div className={styles.inputs}>
                         <input
                             className={styles.nameInput}
@@ -177,18 +183,18 @@ const App = () => {
                             maxLength={40}
                         />
                         <input
-                            className={styles.minutesInput}
+                            className={styles.timeInput}
                             name="minutes"
                             id="minutes"
                             type="number"
                             min={0}
-                            max={120}
+                            max={600}
                             value={taskMinutesTotal || ""}
                             placeholder="min"
                             onChange={handleChangeMinutes}
                         />
                         <input
-                            className={styles.secondsInput}
+                            className={styles.timeInput}
                             name="seconds"
                             id="seconds"
                             type="number"
@@ -198,11 +204,11 @@ const App = () => {
                             placeholder="sec"
                             onChange={handleChangeSeconds}
                         />
-                        <button className={styles.button} type="submit" >
+                        <button type="submit" >
                             <img src="../static/add-square-svgrepo-com.svg" className={styles.buttonImage}></img>
                         </button>
                     </div>
-                    {error ? <div className={styles.error}>{error}</div> : null}
+                    {errorView}
                 </form>
                 {bottom}
             </div>

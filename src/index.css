@@ -25,6 +25,10 @@ input[type="number"] {
     width: 50px;
 }
 
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
 button {
     border: none;
     border-radius: 15px;
@@ -38,4 +42,8 @@ button:hover {
 
 button:active {
     background-color: rgba(1, 1, 1, 0.2);
+}
+
+img {
+    height: 50px;
 }

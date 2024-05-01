@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import styles from './Task.module.css'
 
-function Task({ taskName, taskIndex, taskIsActive, secondsLeft, setIsActive, taskQueue, setTasks }) {
+function Task({ taskName, taskIndex, taskIsActive, secondsLeft, setIsActive, setIsStopped, taskQueue, setTasks }) {
     const [isEditing, setIsEditing] = useState(false);
     const [minutes, setMinutes] = useState(Math.floor(secondsLeft / 60));
     const [seconds, setSeconds] = useState(secondsLeft % 60);
@@ -26,6 +26,7 @@ function Task({ taskName, taskIndex, taskIsActive, secondsLeft, setIsActive, tas
     const handleDelete = () => {
         if (taskIndex === 0) {
             setIsActive(false);
+            setIsStopped(true);
             setTasks(taskQueue.slice(1));
             return;
         }
@@ -84,28 +85,26 @@ function Task({ taskName, taskIndex, taskIsActive, secondsLeft, setIsActive, tas
             <div className={styles.name}>{taskName}</div>
             <div className={styles.rightSide}>
                 <div className={styles.time}>
-                    <div className={styles.minutes}>{minutes < 10 ? "0" + minutes : minutes}</div>
-                    <div className={styles.separator}>:</div>
-                    <div className={styles.seconds}>{seconds < 10 ? "0" + seconds : seconds}</div>
+                    {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
                 </div>
                 <div className={styles.controls}>
-                    <button className={styles.button} onClick={handleEdit}><img src='../../static/pen-2-svgrepo-com.svg' className={styles.buttonImage} /></button>
-                    <button className={styles.button} onClick={handleDelete}><img src='../../static/trash-bin-trash-svgrepo-com.svg' className={styles.buttonImage} /></button>
+                    <button onClick={handleEdit}><img src='../../static/pen-2-svgrepo-com.svg' /></button>
+                    <button onClick={handleDelete}><img src='../../static/trash-bin-trash-svgrepo-com.svg' /></button>
                 </div>
 
             </div>
         </div>;
     } else {
-        viewData = <form className={`${styles.form}`} onReset={handleResetEdit} onSubmit={handleSubmitEdit}>
+        viewData = <form autoComplete='off' className={`${styles.form}`} onReset={handleResetEdit} onSubmit={handleSubmitEdit}>
             <div className={`${styles.inputs} ${taskIsActive ? styles.active : ''}`}>
                 <input required className={styles.nameInput} id="name" name="name" type='text' value={newName || ""} maxLength={40} onChange={handleChangeName} />
                 <input className={styles.timeInput} id="minutes" name="minutes" type='number' value={minutes || ""} min={0} max={120} placeholder='min' onChange={handleChangeMinutes} />
                 <input className={styles.timeInput} id="seconds" name="seconds" type='number' value={seconds || ""} min={0} max={59} placeholder='sec' onChange={handleChangeSeconds} />
-                <button className={styles.button} type='submit'>
-                    <img src='../../static/check-square-svgrepo-com.svg' className={styles.buttonImage} />
+                <button type='submit'>
+                    <img src='../../static/check-square-svgrepo-com.svg' />
                 </button>
-                <button className={styles.button} type='reset'>
-                    <img src='../../static/close-square-svgrepo-com.svg' className={styles.buttonImage} />
+                <button type='reset'>
+                    <img src='../../static/close-square-svgrepo-com.svg' />
                 </button>
             </div>
             {
@@ -127,6 +126,7 @@ Task.propTypes = {
     taskIndex: PropTypes.number,
     taskQueue: PropTypes.array,
     setIsActive: PropTypes.func,
+    setIsStopped: PropTypes.func,
     setTasks: PropTypes.func,
 };
 

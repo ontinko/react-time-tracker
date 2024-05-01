@@ -33,10 +33,6 @@
     font-size: 40px;
 }
 
-.buttonImage {
-    height: 50px;
-}
-
 .form {
     display: flex;
     flex-direction: column;
@@ -61,11 +57,7 @@
     padding: 0px 20px;
 }
 
-.minutesInput {
-    width: 70px;
-}
-
-.secondsInput {
+.timeInput {
     width: 70px;
 }
 
