@@ -1,35 +1,36 @@
 .container {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .app {
-	width: 1000px;
-	background-color: rgb(235, 239, 241);
-	display: flex;
-	flex-direction: column;
-	row-gap: 20px;
-	border: none;
-	border-radius: 20px;
-	padding: 20px;
+    margin: 100px 0;
+    width: 1000px;
+    background-color: rgb(235, 239, 241);
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    border: none;
+    border-radius: 20px;
+    padding: 20px;
 }
 
 .titleBar {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .controls {
-	display: flex;
-	flex-direction: row;
-	column-gap: 5px;
-	justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    column-gap: 5px;
+    justify-content: space-between;
 }
 
 .title {
-	font-size: 40px;
+    font-size: 40px;
 }
 
 .buttonImage {
@@ -37,39 +38,47 @@
 }
 
 .form {
-	display: flex;
-	flex-direction: column;
-	row-gap: 10px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
 }
 
 .inputs {
-	display: flex;
-	flex-direction: row;
-	column-gap: 10px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
 }
 
 .error {
-	padding: 10px 10px 0px 10px;
-	font-size: 24px;
-	font-weight: 600;
+    padding: 10px 10px 0px 10px;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
 }
 
 .nameInput {
-	width: 100%;
-	padding: 0px 20px;
+    width: 100%;
+    padding: 0px 20px;
 }
 
 .minutesInput {
-	width: 70px;
+    width: 70px;
 }
 
 .secondsInput {
-	width: 70px;
+    width: 70px;
 }
 
 .tasks {
-	display: flex;
-	flex-direction: column;
-	padding: 15px 0;
-	row-gap: 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0;
+    row-gap: 15px;
+}
+
+.placeholderMessage {
+    padding: 15px 0;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
 }

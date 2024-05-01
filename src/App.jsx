@@ -11,12 +11,15 @@ const App = () => {
     const [isStopped, setIsStopped] = useState(true);
     const [isDone, setIsDone] = useState(false);
     const [error, setError] = useState("");
+    const [globalStartTime, setGlobalStartTime] = useState(0);
 
     const handleChangeName = event => {
+        setError("");
         setTaskName(event.target.value);
     };
 
     const handleChangeSeconds = event => {
+        setError("");
         const value = event.target.value;
         if (!value) {
             setTaskSecondsTotal(0);
@@ -26,6 +29,7 @@ const App = () => {
     };
 
     const handleChangeMinutes = event => {
+        setError("");
         const value = event.target.value;
         if (!value) {
             setTaskMinutesTotal(0);
@@ -63,10 +67,12 @@ const App = () => {
     };
 
     const handleGoPause = () => {
+        setError("");
         if (isStopped) {
+            setGlobalStartTime(Date.now());
             setIsStopped(false);
         }
-        if (tasks) {
+        if (tasks.length) {
             setIsActive(!isActive);
         } else {
             setIsActive(false);
@@ -74,6 +80,7 @@ const App = () => {
     };
 
     const handleReset = () => {
+        setError("");
         setIsActive(false);
         setIsStopped(true);
         if (tasks.length) {
@@ -83,34 +90,62 @@ const App = () => {
         }
     };
 
-    // TOFIX: timer has additional delay, redo to be self-correcting
+    // The timer is correcting itself every tick
     useEffect(() => {
-        if (isActive) {
-            const interval = setInterval(() => {
-                if (!tasks) {
-                    setIsActive(false);
-                    clearInterval(interval);
-                    setIsDone(true);
-                    return;
-                }
-                if (tasks[0].secondsLeft <= 0) {
-                    clearInterval(interval);
-                    if (tasks.length > 1) {
-                        let nextTask = tasks[1];
-                        nextTask.secondsLeft--;
-                        setTasks([nextTask, ...tasks.slice(2)]);
-                    } else {
-                        setTasks([...tasks.slice(1)]);
-                    }
-                    return;
-                }
-                let task = tasks[0];
-                task.secondsLeft--;
-                setTasks([task, ...tasks.slice(1)]);
-            }, 1000);
-            return () => clearInterval(interval);
+        if (!isActive) {
+            return;
         }
-    }, [isActive, tasks]);
+        let startTime = Date.now();
+        let drift = (startTime - globalStartTime) % 1000;
+        let intervalTime = 1000 - drift; // correcting the interval based on the drift
+        let timer = setTimeout(() => {
+            if (tasks[0].secondsLeft <= 0) {
+                if (tasks.length > 1) {
+                    let nextTask = tasks[1];
+                    nextTask.secondsLeft--;
+                    setTasks([nextTask, ...tasks.slice(2)]);
+                } else {
+                    setTasks([]);
+                    setIsActive(false);
+                    setIsDone(true);
+                }
+                return;
+            }
+            let task = tasks[0];
+            task.secondsLeft--;
+            setTasks([task, ...tasks.slice(1)]);
+        }, intervalTime);
+
+        return () => clearTimeout(timer);
+    }, [isActive, tasks]); // the timer is supposed to get triggered when a task has changed and isActive is true
+
+
+    let bottom;
+
+    if (isDone) {
+        bottom = <div className={styles.placeholderMessage}>All done!</div>
+    } else if (!tasks.length) {
+        bottom = <div className={styles.placeholderMessage}>No tasks for now :)</div>
+    } else {
+        bottom = <div className={styles.tasks}>
+            {
+                tasks.map((task, i) => {
+                    return (
+                        <Task
+                            key={`task_${i}`}
+                            taskName={task.name}
+                            taskIndex={i}
+                            taskIsActive={!isStopped && i === 0 || null}
+                            secondsLeft={task.secondsLeft}
+                            taskQueue={tasks}
+                            setIsActive={setIsActive}
+                            setTasks={setTasks}
+                        />
+                    );
+                })
+            }
+        </div>
+    }
 
     return (
         <div className={styles.container}>
@@ -169,24 +204,7 @@ const App = () => {
                     </div>
                     {error ? <div className={styles.error}>{error}</div> : null}
                 </form>
-                <div className={styles.tasks}>
-                    {isDone
-                        ? "Time is up!"
-                        : tasks.map((task, i) => {
-                            return (
-                                <Task
-                                    key={i}
-                                    taskName={task.name}
-                                    taskIndex={i}
-                                    taskIsActive={!isStopped && i === 0 || null}
-                                    secondsLeft={task.secondsLeft}
-                                    taskQueue={tasks}
-                                    setIsActive={setIsActive}
-                                    setTasks={setTasks}
-                                />
-                            );
-                        })}
-                </div>
+                {bottom}
             </div>
         </div>
     );
