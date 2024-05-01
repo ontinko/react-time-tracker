@@ -2,6 +2,11 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import styles from './Task.module.css';
 
+import editImg from '../../public/pen-2-svgrepo-com.svg';
+import deleteImg from '../../public/trash-bin-trash-svgrepo-com.svg';
+import submitImg from '../../public/check-square-svgrepo-com.svg';
+import resetImg from '../../public/close-square-svgrepo-com.svg';
+
 function Task({
     taskName,
     taskIndex,
@@ -109,10 +114,10 @@ function Task({
                     </div>
                     <div className={styles.controls}>
                         <button onClick={handleEdit}>
-                            <img src="../../static/pen-2-svgrepo-com.svg" />
+                            <img src={editImg} />
                         </button>
                         <button onClick={handleDelete}>
-                            <img src="../../static/trash-bin-trash-svgrepo-com.svg" />
+                            <img src={deleteImg} />
                         </button>
                     </div>
                 </div>
@@ -162,10 +167,10 @@ function Task({
                         onChange={handleChangeSeconds}
                     />
                     <button type="submit">
-                        <img src="../../static/check-square-svgrepo-com.svg" />
+                        <img src={submitImg} />
                     </button>
                     <button type="reset">
-                        <img src="../../static/close-square-svgrepo-com.svg" />
+                        <img src={resetImg} />
                     </button>
                 </div>
                 {error ? <div className={styles.error}>{error}</div> : null}

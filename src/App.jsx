@@ -2,7 +2,15 @@ import { useEffect, useState } from 'react';
 import Task from './components/Task';
 import styles from './App.module.css';
 
+import playImg from '../public/play-svgrepo-com.svg';
+import resetImg from '../public/stop-svgrepo-com.svg';
+import pauseImg from '../public/pause-svgrepo-com.svg';
+import addImg from '../public/add-square-svgrepo-com.svg';
+
+
 const App = () => {
+    console.log(resetImg);
+    console.log(playImg);
     const [taskName, setTaskName] = useState('');
     const [taskSecondsTotal, setTaskSecondsTotal] = useState(0);
     const [taskMinutesTotal, setTaskMinutesTotal] = useState(0);
@@ -165,7 +173,7 @@ const App = () => {
                     <div className={styles.controls}>
                         <button onClick={handleReset}>
                             <img
-                                src="../static/stop-svgrepo-com.svg"
+                                src={resetImg}
                                 className={styles.buttonImage}
                             />
                         </button>
@@ -173,8 +181,8 @@ const App = () => {
                             <img
                                 src={
                                     isActive
-                                        ? '../static/pause-svgrepo-com.svg'
-                                        : '../static/play-svgrepo-com.svg'
+                                        ? pauseImg
+                                        : playImg
                                 }
                                 className={styles.buttonImage}
                             />
@@ -222,7 +230,7 @@ const App = () => {
                         />
                         <button type="submit">
                             <img
-                                src="../static/add-square-svgrepo-com.svg"
+                                src={addImg}
                                 className={styles.buttonImage}
                             ></img>
                         </button>
