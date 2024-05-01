@@ -51,7 +51,7 @@
     padding: 0 15px;
     display: flex;
     flex-direction: row;
-    font-family: "Courier New", Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
     font-weight: 600;
     font-size: 28px;
 }
@@ -71,7 +71,7 @@
 .timeInput {
     width: 70px;
     font-weight: 600;
-    font-family: "Courier New", Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
     font-size: 28px;
 }
 

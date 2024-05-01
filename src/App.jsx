@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import Task from "./components/Task";
-import styles from "./App.module.css";
+import { useEffect, useState } from 'react';
+import Task from './components/Task';
+import styles from './App.module.css';
 
 const App = () => {
-    const [taskName, setTaskName] = useState("");
+    const [taskName, setTaskName] = useState('');
     const [taskSecondsTotal, setTaskSecondsTotal] = useState(0);
     const [taskMinutesTotal, setTaskMinutesTotal] = useState(0);
     const [tasks, setTasks] = useState([]);
@@ -14,15 +14,15 @@ const App = () => {
 
     // the only custom validation error is that of non specified timer duration
     // it gets reset with each new edit for convenience
-    const [error, setError] = useState("");
+    const [error, setError] = useState('');
 
-    const handleChangeName = event => {
-        setError("");
+    const handleChangeName = (event) => {
+        setError('');
         setTaskName(event.target.value);
     };
 
-    const handleChangeSeconds = event => {
-        setError("");
+    const handleChangeSeconds = (event) => {
+        setError('');
         const value = event.target.value;
         if (!value) {
             setTaskSecondsTotal(0);
@@ -31,8 +31,8 @@ const App = () => {
         setTaskSecondsTotal(value);
     };
 
-    const handleChangeMinutes = event => {
-        setError("");
+    const handleChangeMinutes = (event) => {
+        setError('');
         const value = event.target.value;
         if (!value) {
             setTaskMinutesTotal(0);
@@ -41,11 +41,11 @@ const App = () => {
         setTaskMinutesTotal(value);
     };
 
-    const handleAddTask = event => {
+    const handleAddTask = (event) => {
         event.preventDefault();
-        setError("");
+        setError('');
         if (taskSecondsTotal == 0 && taskMinutesTotal == 0) {
-            setError("Please specify the duration of the task");
+            setError('Please specify the duration of the task');
             return;
         }
         let minutes = 0;
@@ -63,14 +63,14 @@ const App = () => {
             secondsLeft: minutes * 60 + seconds,
         };
         setTasks([...tasks, newTask]);
-        setTaskName("");
+        setTaskName('');
         setTaskSecondsTotal(0);
         setTaskMinutesTotal(0);
         setIsDone(false);
     };
 
     const handleGoPause = () => {
-        setError("");
+        setError('');
         if (isStopped) {
             setGlobalStartTime(Date.now());
             setIsStopped(false);
@@ -83,7 +83,7 @@ const App = () => {
     };
 
     const handleReset = () => {
-        setError("");
+        setError('');
         setIsActive(false);
         setIsStopped(true);
         if (tasks.length) {
@@ -126,19 +126,21 @@ const App = () => {
     let errorView;
 
     if (isDone) {
-        bottom = <div className={styles.placeholderMessage}>All done!</div>
+        bottom = <div className={styles.placeholderMessage}>All done!</div>;
     } else if (!tasks.length) {
-        bottom = <div className={styles.placeholderMessage}>No tasks for now :)</div>
+        bottom = (
+            <div className={styles.placeholderMessage}>No tasks for now :)</div>
+        );
     } else {
-        bottom = <div className={styles.tasks}>
-            {
-                tasks.map((task, i) => {
+        bottom = (
+            <div className={styles.tasks}>
+                {tasks.map((task, i) => {
                     return (
                         <Task
                             key={`task_${i}`}
                             taskName={task.name}
                             taskIndex={i}
-                            taskIsActive={!isStopped && i === 0 || null}
+                            taskIsActive={(!isStopped && i === 0) || null}
                             secondsLeft={task.secondsLeft}
                             taskQueue={tasks}
                             setIsActive={setIsActive}
@@ -146,9 +148,9 @@ const App = () => {
                             setTasks={setTasks}
                         />
                     );
-                })
-            }
-        </div>
+                })}
+            </div>
+        );
     }
 
     if (error) {
@@ -162,14 +164,28 @@ const App = () => {
                     <div className={styles.title}>Time Tracker</div>
                     <div className={styles.controls}>
                         <button onClick={handleReset}>
-                            <img src="../static/stop-svgrepo-com.svg" className={styles.buttonImage} />
+                            <img
+                                src="../static/stop-svgrepo-com.svg"
+                                className={styles.buttonImage}
+                            />
                         </button>
                         <button onClick={handleGoPause}>
-                            <img src={isActive ? "../static/pause-svgrepo-com.svg" : "../static/play-svgrepo-com.svg"} className={styles.buttonImage} />
+                            <img
+                                src={
+                                    isActive
+                                        ? '../static/pause-svgrepo-com.svg'
+                                        : '../static/play-svgrepo-com.svg'
+                                }
+                                className={styles.buttonImage}
+                            />
                         </button>
                     </div>
                 </div>
-                <form autoComplete="off" className={styles.form} onSubmit={handleAddTask}>
+                <form
+                    autoComplete="off"
+                    className={styles.form}
+                    onSubmit={handleAddTask}
+                >
                     <div className={styles.inputs}>
                         <input
                             className={styles.nameInput}
@@ -189,7 +205,7 @@ const App = () => {
                             type="number"
                             min={0}
                             max={600}
-                            value={taskMinutesTotal || ""}
+                            value={taskMinutesTotal || ''}
                             placeholder="min"
                             onChange={handleChangeMinutes}
                         />
@@ -200,12 +216,15 @@ const App = () => {
                             type="number"
                             min={0}
                             max={59}
-                            value={taskSecondsTotal || ""}
+                            value={taskSecondsTotal || ''}
                             placeholder="sec"
                             onChange={handleChangeSeconds}
                         />
-                        <button type="submit" >
-                            <img src="../static/add-square-svgrepo-com.svg" className={styles.buttonImage}></img>
+                        <button type="submit">
+                            <img
+                                src="../static/add-square-svgrepo-com.svg"
+                                className={styles.buttonImage}
+                            ></img>
                         </button>
                     </div>
                     {errorView}
