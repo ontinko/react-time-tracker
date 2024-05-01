@@ -1,8 +1,33 @@
-# React + Vite
+# React Time Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Deployed at [GitHub Pages](https://ontinko.github.io/react-time-tracker)
 
-Currently, two official plugins are available:
+## Functionality
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   adding, editing and removing tasks
+-   notifications when tasks are finished
+-   self-correcting timer
+
+## Setup
+
+1. Get the code
+
+```sh
+git clone https://github.com/ontinko/react-time-tracker.git
+
+cd react-time-tracker
+```
+
+2. Install the dependencies
+
+```sh
+npm install
+```
+
+3. Run the app
+
+```sh
+npm run dev
+```
+
+To visit the app, open `localhost:5173` in your browser
