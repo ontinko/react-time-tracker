@@ -75,14 +75,15 @@ const App = () => {
 
     const handleGoPause = () => {
         setError('');
-        if (isStopped) {
-            setGlobalStartTime(Date.now());
-            setIsStopped(false);
-        }
         if (tasks.length) {
             setIsActive(!isActive);
         } else {
             setIsActive(false);
+            return;
+        }
+        if (isStopped) {
+            setGlobalStartTime(Date.now());
+            setIsStopped(false);
         }
     };
 
@@ -101,11 +102,14 @@ const App = () => {
         if (Notification.permission === 'granted') {
             new Notification(message);
         }
-    }
+    };
 
     // request to show notifications
     useEffect(() => {
-        if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+        if (
+            Notification.permission !== 'granted' &&
+            Notification.permission !== 'denied'
+        ) {
             Notification.requestPermission();
         }
     }, []);
@@ -133,7 +137,9 @@ const App = () => {
                     setIsStopped(true);
                     setIsDone(true);
                 }
-                showNotification(`Time's up: '${lastTaskName}' is done!${done ? ` You're all done, great job!` : ` Next task: ${nextTask.name}`}`);
+                showNotification(
+                    `Time's up: '${lastTaskName}' is done!${done ? ` You're all done, great job!` : ` Next task: ${nextTask.name}`}`
+                );
                 return;
             }
             let task = tasks[0];
@@ -193,11 +199,7 @@ const App = () => {
                         </button>
                         <button onClick={handleGoPause}>
                             <img
-                                src={
-                                    isActive
-                                        ? pauseImg
-                                        : playImg
-                                }
+                                src={isActive ? pauseImg : playImg}
                                 className={styles.buttonImage}
                             />
                         </button>
