@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import styles from './Task.module.css';
-
 import editImg from '../../public/pen-2-svgrepo-com.svg';
 import deleteImg from '../../public/trash-bin-trash-svgrepo-com.svg';
 import submitImg from '../../public/check-square-svgrepo-com.svg';

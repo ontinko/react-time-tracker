@@ -1,16 +1,12 @@
 import { useEffect, useState } from 'react';
 import Task from './components/Task';
+import addImg from '../public/add-square-svgrepo-com.svg';
 import styles from './App.module.css';
-
 import playImg from '../public/play-svgrepo-com.svg';
 import resetImg from '../public/stop-svgrepo-com.svg';
 import pauseImg from '../public/pause-svgrepo-com.svg';
-import addImg from '../public/add-square-svgrepo-com.svg';
-
 
 const App = () => {
-    console.log(resetImg);
-    console.log(playImg);
     const [taskName, setTaskName] = useState('');
     const [taskSecondsTotal, setTaskSecondsTotal] = useState(0);
     const [taskMinutesTotal, setTaskMinutesTotal] = useState(0);
@@ -101,6 +97,19 @@ const App = () => {
         }
     };
 
+    const showNotification = (message) => {
+        if (Notification.permission === 'granted') {
+            new Notification(message);
+        }
+    }
+
+    // request to show notifications
+    useEffect(() => {
+        if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+            Notification.requestPermission();
+        }
+    }, []);
+
     // The timer is correcting itself every tick
     useEffect(() => {
         if (!isActive) {
@@ -111,15 +120,20 @@ const App = () => {
         let intervalTime = 1000 - drift; // correcting the interval based on the drift
         let timer = setTimeout(() => {
             if (tasks[0].secondsLeft <= 0) {
-                if (tasks.length > 1) {
-                    let nextTask = tasks[1];
+                let lastTaskName = tasks[0].name;
+                let done = tasks.length === 1;
+                let nextTask;
+                if (!done) {
+                    nextTask = tasks[1];
                     nextTask.secondsLeft--;
                     setTasks([nextTask, ...tasks.slice(2)]);
                 } else {
                     setTasks([]);
                     setIsActive(false);
+                    setIsStopped(true);
                     setIsDone(true);
                 }
+                showNotification(`Time's up: '${lastTaskName}' is done!${done ? ` You're all done, great job!` : ` Next task: ${nextTask.name}`}`);
                 return;
             }
             let task = tasks[0];
