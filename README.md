@@ -1,6 +1,6 @@
 # React Time Tracker
 
-### Deployed at [GitHub Pages](https://ontinko.github.io/react-time-tracker)
+### Deployed at [GitHub Pages](https://ontinko.github.io/react-time-tracker) (please allow notifications)
 
 ## Functionality
 
